@@ -1,11 +1,15 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/contacts/contactsSelector';
-
+import {
+  selectContacts,
+  selectLoading,
+  selectError,
+} from 'redux/contacts/contactsSelector';
+import { fetchContacts, addContact, deleteContact } from 'redux/operations';
 import { filterContacts } from 'redux/filter/filterSlice';
-import { addContact, deleteContact } from '../redux/contacts/contactsSlice';
 
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
@@ -13,13 +17,18 @@ import { Section } from './Section/Section';
 import PhoneBookForm from './AddedForm/AddContacts';
 export const Phonebook = () => {
   const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const handleChange = filterKey => {
     // setFilter(filterKey.target.value);
     console.log(filterKey);
 
-    console.log('1');
     dispatch(filterContacts(filterKey));
   };
   const addNewContact = ({ name, number }) => {
@@ -37,14 +46,6 @@ export const Phonebook = () => {
   const contactDelete = id => {
     dispatch(deleteContact(id));
   };
-  // const filterContacts = () => {
-  //   if (filter) {
-  //     return contacts.filter(({ name }) =>
-  //       name.toLowerCase().includes(filter.toLowerCase())
-  //     );
-  //   }
-  //   return contacts;
-  // };
 
   return (
     <div>
@@ -53,7 +54,11 @@ export const Phonebook = () => {
       </Section>
       <Section title="Contacts">
         <Filter handleChange={handleChange} />
-        <ContactList onDeleteContact={contactDelete} />
+        {isLoading && <p>Loading...</p>}
+        {error && { error }}
+        {!isLoading && !error && (
+          <ContactList onDeleteContact={contactDelete} />
+        )}
       </Section>
     </div>
   );
