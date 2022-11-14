@@ -15,12 +15,15 @@ import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { Section } from './Section/Section';
 import PhoneBookForm from './AddedForm/AddContacts';
+fetchContacts();
+console.log('111');
 export const Phonebook = () => {
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
