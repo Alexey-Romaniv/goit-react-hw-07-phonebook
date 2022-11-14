@@ -16,7 +16,6 @@ import { ContactList } from './ContactList/ContactList';
 import { Section } from './Section/Section';
 import PhoneBookForm from './AddedForm/AddContacts';
 fetchContacts();
-console.log('111');
 export const Phonebook = () => {
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
