@@ -5,7 +5,6 @@ import { selectContacts } from 'redux/contacts/contactsSelector';
 import { selectFilter } from 'redux/filter/filterSelectors';
 
 import styled from 'styled-components';
-import { ContactBtn } from 'components/AddedForm/AddContacts';
 
 const List = styled.ul`
   display: flex;
@@ -15,6 +14,16 @@ const List = styled.ul`
 const ListItem = styled.li`
   font-size: 18px;
   font-weight: 500;
+`;
+const DeleteBtn = styled.button`
+  width: 100px;
+  background-color: grey;
+  color: white;
+  border-radius: 4px;
+  &:hover,
+  &:focus {
+    background-color: blue;
+  }
 `;
 
 export const ContactList = ({ onDeleteContact }) => {
@@ -28,9 +37,9 @@ export const ContactList = ({ onDeleteContact }) => {
           return (
             <ListItem key={id}>
               {name}: {number}{' '}
-              <ContactBtn type="button" onClick={() => onDeleteContact(id)}>
+              <DeleteBtn type="button" onClick={() => onDeleteContact(id)}>
                 Delete
-              </ContactBtn>
+              </DeleteBtn>
             </ListItem>
           );
         })}

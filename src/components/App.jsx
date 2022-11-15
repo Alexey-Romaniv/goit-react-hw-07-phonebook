@@ -29,7 +29,6 @@ export const Phonebook = () => {
 
   const handleChange = filterKey => {
     // setFilter(filterKey.target.value);
-    console.log(filterKey);
 
     dispatch(filterContacts(filterKey));
   };
@@ -57,7 +56,7 @@ export const Phonebook = () => {
       <Section title="Contacts">
         <Filter handleChange={handleChange} />
         {isLoading && <p>Loading...</p>}
-        {error && { error }}
+        {error && <p>{error}</p>}
         {!isLoading && !error && (
           <ContactList onDeleteContact={contactDelete} />
         )}
